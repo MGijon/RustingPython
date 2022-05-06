@@ -5,6 +5,8 @@
     // Hay distintos tipos de macros para 'escupir' al standard output, ya lo veremos.
 // OBS: Para declarar una variable 'let nombreVariable: tipo_de_dato = valor;'
 // OBS: acabamos cada lInea con ';'
+// REF: https://doc.rust-lang.org/book/ch03-02-data-types.html
+
 fn main() {
     // SCALAR TYPES: integer, floating-point numbers, booleans and characters
     // ------------
@@ -55,5 +57,30 @@ fn main() {
 
     // COMPOUND TYPES: tuples and arrays
     // ---------------
-    // TODO: complete this!
+    // (1) Tuples
+    // - Permite agrupar variables de distintos tipos
+    // - Is inmutable
+    // - Podemos acceder a sus diferentes elementos utilizando '.'
+    // - Las declaramos usando parEntesis.
+    let tupla1: (u32, f64, u8);
+    tupla1 = (73, 9.0, 8);
+    println!("{:?}", tupla1);  // no podemos usar el formateador por defecto
+    println!("{} - {} - {}", tupla1.0, tupla1.1, tupla1.2);
+
+    // podemos desempaquetar las variables
+    let (x, y, z) = tupla1;
+    println!("{} {} {}", x, y, z);
+
+    // (2) ARRAY
+    // - Agrupa elementos del mismo tipo
+    // - La longitud es fija (a diferencia de Python!)
+    let ar1: [i32; 3] = [3, 2, 1];
+    let ar2 = [1, 2, 3, 4];  // el tipo puede inferirse
+
+    // podemos crear arrays con un Unico valor repetido x veces, 
+    let ar3 = [1; 10];  // 1, 1, 1, 1, ..., 1 - 10 veces
+    
+    // accedemos a los elementos como lo harIamos en Python, con corchetes
+    println!("{} {}", ar1[0], ar2[3]);
 }
+// https://doc.rust-lang.org/book/ch09-01-unrecoverable-errors-with-panic.html
