@@ -1,6 +1,14 @@
 import random
 import time
 import numpy as np
+import pkg_resources
+
+# Print the installed packages
+installed_packages = pkg_resources.working_set
+installed_packages_list = sorted(
+    ["%s==%s" % (i.key, i.version) for i in installed_packages]
+)
+print(installed_packages_list)
 
 # Decorator to measure time
 def measure_time(method):
@@ -22,44 +30,25 @@ def measure_time(method):
 
     return wrapper
 
-
 # Generate some "big" data.
 def generate_data(n: int):
     # This will not be usefull in our case due to the fact that
     # could be repeated elements
+    random.seed(100)
     return [random.randint(0, n) for _ in range(n)]
 
-
-random.seed(100)
-print(generate_data(n=1000))
-
+#print(generate_data(n=1000))
 
 @measure_time
 def test_():
     time.sleep(2)
     print("Hello world")
 
+#test_()
 
-test_()
+try:
+    import rust_example_package as rp
+    rp.say_hi()
+except Exception as e:
+    print(e)
 
-
-"""
-def timeit(method):
-    def timed(*args, **kwargs):
-        ts = time.time()
-        result = method(*args, **kwargs)
-        te = time.time()
-
-        if 'log_time' in kwargs:
-            name = kwargs.get('log_name', method.__name__.upper())
-            kwargs['log_time'][name] = int((te - ts) * 1000)
-        else:
-            print('%r  %2.22f ms' % (method.__name__, (te - ts) * 1000))
-        return result
-    return timed
-
-@timeit
-def foo():clearclear
-
-    do_some_work()
-"""
