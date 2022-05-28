@@ -18,10 +18,6 @@ pub fn plot_path_evolution(path: Vec<custom_types::custom_types::Point>) -> Resu
         ys.push(path[i].y);
     }
 
-    //let max_x: f64 = *xs.iter().max().unwrap();
-    //let min_x: f64 = *xs.iter().min().unwrap();
-    //let max_y: f64 = *ys.iter().max().unwrap();
-    //let min_y: f64 = *ys.iter().min().unwrap();
     let mut max_x: f64 = xs[0];
     let mut max_y: f64 = xs[0];
     let mut min_x: f64 = ys[0];
@@ -43,19 +39,19 @@ pub fn plot_path_evolution(path: Vec<custom_types::custom_types::Point>) -> Resu
         }
     }
 
-
-    // graphic shit
+    // graphic
     let root = BitMapBackend::new("graphic.png", (640, 480)).into_drawing_area();
     root.fill(&RGBColor(255, 255, 255))?;
 
+    let adjust_limit = | x: f64 | {
+        x * (1f64 + 0.10f64)
+    };
+
     let root = root.apply_coord_spec(Cartesian2d::<RangedCoordf64, RangedCoordf64>::new(
-        min_x..max_x,
-        min_y..max_y,
-        //-10f64..10f64,
-        //-10f64..10f64,
+        adjust_limit(min_x)..adjust_limit(max_x),
+        adjust_limit(min_y)..adjust_limit(max_y),
         (0..640, 0..480),
     ));
-
 
     let dot_and_label = |x: f64, y: f64, z: f64| {
         return EmptyElement::at((x, y))
