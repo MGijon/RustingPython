@@ -1,6 +1,6 @@
-//use rand::Rng;
-//use rand_distr::Normal;
 use rand::Rng;
+mod custom_types;
+mod graphics;
 
 // -------
 // REF: https://stackoverflow.com/questions/21747136/how-do-i-print-the-type-of-a-variable
@@ -35,11 +35,12 @@ fn update_value(original_value: f64) -> f64 {
 }
 
 // Struct to save the path followed by the algorithm
-struct Point {
-    x: f64,
-    y: f64,
-    z: f64,
-}
+// TODO: move to a common file
+//struct Point {
+//    x: f64,
+//    y: f64,
+//    z: f64,
+//}
 
 fn main() {
     // initial points
@@ -49,13 +50,13 @@ fn main() {
     println!("Initial spehre value: {}", initial_value);
 
     // vector to save the path folloed by the algorithm
-    let initial_point = Point {
+    let initial_point = custom_types::custom_types::Point {
         x: x,
         y: y,
         z: initial_value,
     };
 
-    let mut path: Vec<Point> = vec![];
+    let mut path: Vec<custom_types::custom_types::Point> = vec![];
     path.push(initial_point);
 
     let number_steps: usize = 10000;
@@ -70,7 +71,7 @@ fn main() {
             x = new_x;
             y = new_y;
 
-            path.push(Point {
+            path.push(custom_types::custom_types::Point {
                 x: x,
                 y: y,
                 z: initial_value,
@@ -81,4 +82,6 @@ fn main() {
         }
     }
     println!("{} {}: {}", x, y, initial_value);
+    //println!("{:?}", path.type_name());
+    graphics::basic::plot_path_evolution(path);
 }
